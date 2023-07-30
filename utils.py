@@ -24,16 +24,21 @@ class DFT_Pipeline:
         if not self.__funcs:
             return "Empty Pipeline"
         
-        # starting values for the string
-        branch_cont = "├─"
-        branch_end = "└─"
+        # create string from functions and arguments
         output = "Pipeline:\n"
         for i, [func, args] in enumerate(self.__funcs):
+
+            # check if its the end of the pipeline
             if i == len(self.__funcs) - 1:
-                output += f"  {branch_end}"
+                output += f"  └─"
             else:
-                output += f"  {branch_cont}"
-            output += f" {func.__name__}, args: {' '.join(map(str, args))}\n"
+                output += f"  ├─"
+
+            # add function name, and arguments if necessary
+            output += f" {func.__name__}"
+            if args:
+                output += f", args: {' '.join(map(str, args))}"
+            output += "\n"
         return output
         
     # add a function to the pipeline with optional arguments
