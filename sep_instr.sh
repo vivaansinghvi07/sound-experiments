@@ -9,7 +9,7 @@ cd vocal-remover
 pip3 install -r requirements.txt &>/dev/null
 pip3 install torch resampy &>/dev/null
 python3 inference.py -i ../$1.wav -B 8
-mv "$1"_Instruments.wav ../"$1"_instr.wav
+mv "$1"_Instruments.wav ../songs/"$1"_instr.wav
 cd ..
 rm -rf vocal-remover/
 
