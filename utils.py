@@ -45,6 +45,15 @@ class DFT_Pipeline:
     def add(self, other_func, *args):
         self.__funcs.append([other_func, args])
 
+    # remove a function from the end
+    def remove(self, other_func):
+        remove_idx = -1
+        for idx, [func, _] in self.__funcs:
+            if func.__name__ == other_func.__name__:
+                remove_idx = idx
+        if remove_idx != -1:
+            del self.__funcs[remove_idx]
+
     # go through the pipeline
     def run(self, s: type_DFT):
         for [func, args] in self.__funcs:
