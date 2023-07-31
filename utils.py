@@ -30,9 +30,9 @@ class DFT_Pipeline:
 
             # check if its the end of the pipeline
             if i == len(self.__funcs) - 1:
-                output += f"  └─"
+                output += f"└─"
             else:
-                output += f"  ├─"
+                output += f"├─"
 
             # add function name, and arguments if necessary
             output += f" {func.__name__}"
