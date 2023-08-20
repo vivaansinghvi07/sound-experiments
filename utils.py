@@ -2,10 +2,6 @@ import librosa
 import numpy as np
 import matplotlib.pyplot as plt
 
-# define functions
-stft = lambda song: librosa.stft(song)
-istft = lambda song: librosa.istft(song)
-
 # define types
 type_Song = np.ndarray
 type_DFT = np.ndarray
@@ -55,7 +51,7 @@ class DFT_Pipeline:
             del self.__funcs[remove_idx]
 
     # go through the pipeline
-    def run(self, s: type_DFT):
+    def __call__(self, s: type_DFT):
         for [func, args] in self.__funcs:
             s = func(s, *args)
         return s
@@ -73,6 +69,22 @@ def disp_specto(s: type_DFT) -> None:
     )
     fig.colorbar(img, ax=ax, format="%+2.0f dB")
     plt.show()
+
+# plot for model
+def disp_model_specto(x, sample_rate, show_black_and_white=False):
+    x_stft = np.abs(librosa.stft(x, n_fft=2048))
+    fig, _ = plt.subplots()
+    fig.set_size_inches(20, 10)
+    x_stft_db = librosa.amplitude_to_db(x_stft, ref=np.max)
+    if(show_black_and_white):
+        librosa.display.specshow(
+            data=x_stft_db, y_axis='log', 
+            sr=sample_rate, cmap='gray_r'
+        )
+    else:
+        librosa.display.specshow(data=x_stft_db, y_axis='log', sr=sample_rate)
+
+    plt.colorbar(format='%+2.0f dB')
 
 # displays the waveform 
 def disp_wav(song: type_Song, rate: int, slice: slice) -> None:
